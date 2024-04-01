@@ -23,9 +23,9 @@ jobs:
 
             - name: Install Dependencies
               run: |
-                npm install -G appium
+                npm i --location=global appium
                 appium -v
-                npm install -G @appium/doctor
+                npm i --location=global @appium/doctor
                 appium-doctor --ios
                 npm install
 
