@@ -1,0 +1,33 @@
+name: REGRESSION
+on:
+    workflow_dispatch:
+        inputs:
+            REGRESSION_ENVIRONMENT:
+                required: true
+                type: choice
+                description: Which Salesforce environment do you want to run the regression against ?
+                options:
+                    - uat
+                    - test
+                    - sit
+                    - qa
+                    - stage
+                default: qa
+
+jobs:
+    run-tests:
+        runs-on: macOS-13
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+
+            - name: Install Dependencies
+              run: |
+                npm install -G appium
+                appium -v
+                npm install -G @appium/doctor
+                appium-doctor --ios
+                npm install
+
+            - name: Run Tests
+              run: npm run wdio
